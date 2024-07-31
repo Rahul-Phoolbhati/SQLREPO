@@ -43,3 +43,34 @@ select department , count(department) from Worker group by department;
 
 select concat(first_name, ' ',last_name) from Worker where salary between 100000 AND 500000;
 
+select department , count(department) from Worker group by department order by count(department) desc;
+select department, count(worker_id) AS no_of_worker from Worker group by department
+ORDER BY no_of_worker desc;
+
+select * from Worker as w inner join Title as t on w.worker_id = t.worker_ref_id where t.worker_title = 'Manager';
+
+select worker_title, count(*) as count from Title group by worker_title having count>1 order by count;
+
+select * from Worker where MOD (WORKER_ID, 3) <> 0;
+
+
+create table worker_clone as select * from Worker where department in ('Admin' , 'Account') order by department;
+-- or --
+CREATE TABLE worker_clone2 LIKE Worker; -- only schema copy --
+INSERT INTO worker_clone2 select * from Worker;
+
+
+
+
+select curdate();
+select now();
+
+select * from Worker order by salary desc limit 5;
+-- nth highest salary --
+select * from Worker order by salary desc limit 4,1;
+
+
+
+select department, sum(salary) as depSal from Worker group by department order by depSal;
+
+select concat(first_name,' ',last_name), salary from Worker where salary = (select max(salary) from Worker);
